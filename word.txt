@@ -22,7 +22,6 @@ Dachine
 Daikon
 Endive
 Fenouil
-Fève
 Flageolet
 Giromon
 Haricot
@@ -31,8 +30,6 @@ Kancon
 Konbu
 Laitue
 Lentille
-Mâche
-Maïs
 Manioc
 Navet
 Oignon

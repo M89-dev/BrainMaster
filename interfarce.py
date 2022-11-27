@@ -13,7 +13,14 @@ class Interface():
         self.compteur = 0
         self.compteur_score = 0
         self.score_victory = 0
-        self.current_file = os.path.dirname(__file__)
+        self.current_file = str(os.path.dirname(__file__)).split('dist')[0]
+
+    def close_window(self):
+        with open(self.current_file + "\\user_word.txt", "r+", encoding = 'utf-8') as wt:
+            wt.truncate(0)
+            wt.close()
+
+        self.fenetre.destroy()
 
     def get_lenFile(self):
         with open(self.current_file + "\\user_word.txt", "r+", encoding = 'utf-8') as wt:
@@ -33,7 +40,6 @@ class Interface():
         self.compteur = 0
         self.compteur_score = 0
         self.MainWindow()
-
 
         with open(self.current_file + "\\user_word.txt", "r+", encoding = 'utf-8') as wt:
             wt.truncate(0)
@@ -59,6 +65,9 @@ class Interface():
             self.compteur_score += 1
             self.score.config(text=self.compteur_score)
             self.entry_text.delete(0, END)
+
+            if self.get_lenFile() == 0:
+                self.delete_all()
 
         elif word_input != document_word:
             self.delete_all()
@@ -101,7 +110,6 @@ class Interface():
         with open(self.current_file + "\\word.txt", "r") as file:
             allText = file.read()
             words = list(allText.split())
-            print(words)
         
             result = random.choice(words)
         
@@ -124,7 +132,8 @@ class Interface():
     def Start(self):
         self.MainWindow()
         self.fenetre.bind("<KeyPress>", self.keydown)
-     
+
+        self.fenetre.protocol("WM_DELETE_WINDOW", self.close_window)
         self.fenetre.mainloop()
 
 tk = Interface()
