@@ -60,7 +60,7 @@ class Interface():
         word_input = self.entry_text.get()
         document_word = self.get_valeur().split("\n")[0]
 
-        if word_input == document_word:
+        if word_input.lower() == document_word.lower():
 
             self.compteur_score += 1
             self.score.config(text=self.compteur_score)
