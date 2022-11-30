@@ -13,20 +13,17 @@ class Interface():
         self.compteur = 0
         self.compteur_score = 0
         self.score_victory = 0
+        self.list_word = []
         self.current_file = str(os.path.dirname(__file__)).split('dist')[0]
 
-    def close_window(self):
-        with open(self.current_file + "\\user_word.txt", "r+", encoding = 'utf-8') as wt:
-            wt.truncate(0)
-            wt.close()
+    def get_valeur(self):
+        return self.list_word.pop(0)
 
+    def close_window(self):
         self.fenetre.destroy()
 
     def get_lenFile(self):
-        with open(self.current_file + "\\user_word.txt", "r+", encoding = 'utf-8') as wt:
-            len_file = len(wt.readlines()) 
-
-        return len_file
+        return len(self.list_word)
 
     def delete_all(self):
         if self.compteur_score > self.score_victory:
@@ -41,9 +38,7 @@ class Interface():
         self.compteur_score = 0
         self.MainWindow()
 
-        with open(self.current_file + "\\user_word.txt", "r+", encoding = 'utf-8') as wt:
-            wt.truncate(0)
-            wt.close()
+        self.list_word = []
 
     def keydown(self, e):
         if e.char == "+":
@@ -53,12 +48,11 @@ class Interface():
             self.GameWindow()
 
     def write_text(self, word):
-        with open(self.current_file + "\\user_word.txt", "a", encoding = 'utf-8') as wt:
-            wt.write(f"{word}\n") 
+        self.list_word.append(word)
 
     def get_input(self):
         word_input = self.entry_text.get()
-        document_word = self.get_valeur().split("\n")[0]
+        document_word = self.get_valeur()
 
         if word_input.lower() == document_word.lower():
 
@@ -118,16 +112,6 @@ class Interface():
         self.compteur += 1
         self.compteur_round.config(text=self.compteur)
 
-    def get_valeur(self):
-        with open(self.current_file + "\\user_word.txt",'r+',encoding = 'utf-8') as document_word:
-            first_line = document_word.readline()
-
-            data = document_word.read() 
-            document_word.seek(0) 
-            document_word.write(data) 
-            document_word.truncate()
-      
-        return first_line
         
     def Start(self):
         self.MainWindow()
